@@ -1,0 +1,41 @@
+<h1 class="text-5xl font-black my-3">Nuestros productos</h1>
+
+<app-search-input placeholder="Busca por nombre" (searchQuery)="search($event)" />
+@if (products) {
+<div class="grid grid-cols-4 gap-3 items-center align-middle mt-6 px-3">
+    @for (item of products | filterProducts: querySearch; track item._id; let i = $index) {
+    <div class="card bg-base-200 shadow-sm overflow-hidden rounded-xl">
+        <figure>
+            <img [src]="item.thumbnail" alt="Shoes" class="object-cover" />
+        </figure>
+        <div class="card-body">
+            <h2 class="card-title">
+                {{item.name}}
+            </h2>
+            <div class="flex justify-between items-center">
+                <p class="font-black">{{item.price | currency}}</p>
+                <div class="flex items-center rounded-full">
+                    <p class="text-center flex items-center gap-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="#eaf70e"
+                                d="M7.625 6.4L12 .725L16.375 6.4l6.85 2.3l-4.325 6.125l.175 6.825L12 19.675L4.925 21.65L5.1 14.8L.8 8.7z" />
+                        </svg>
+                        <span class="font-bold">{{item.rating}}</span>
+                    </p>
+                </div>
+            </div>
+            <p>{{item.description | truncateText: 100}}</p>
+            <div class="card-actions justify-end">
+                @for (tag of item.tags; track $index) {
+                <div class="badge badge-outline">{{tag}}</div>
+                }
+            </div>
+            <div class="flex justify-between w-full items-center mt-3">
+                <button class="btn btn-secondary" (click)="addToCart(item)">Añadir al carrito</button>
+                <button class="btn btn-info">Añadir a favoritos</button>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+}

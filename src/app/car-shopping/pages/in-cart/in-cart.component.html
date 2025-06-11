@@ -1,0 +1,26 @@
+<!-- <app-title title="Tu carrito" /> -->
+
+<div class="my-0 mx-auto max-w-10/12 flex justify-between gap-x-7">
+    <ul class="bg-base-200 rounded flex-grow p-5">
+        @for (item of items; track $index; let i = $index) {
+        <li class="flex items-center justify-between gap-x-3">
+            <img [src]="item.product.thumbnail" alt="" class="max-w-30">
+            <div class="flex justify-start flex-col flex-grow">
+                <span>{{item.product.name | truncateText: 50}}</span>
+                <div>
+                    <button class="text-error">Eliminar</button>
+                </div>
+            </div>
+            <span class="text-success">${{item.price}}</span>
+            <app-counter [cuantity]="item.elements" (newCuantity)="handleNewCuantity($event, i)"/>
+        </li>
+        }
+    </ul>
+
+    <div class=" ml-10 bg-base-200 p-2">
+        <h3 class="font-bold">Resumen de tu compra</h3>
+        <div class="divider"></div>
+        <p>Total de elementos: {{items.length}}</p>
+        <p>Total a pagar: </p>
+    </div>
+</div>
